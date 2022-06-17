@@ -60,7 +60,7 @@
             methods:{
                 async getCode() {
                     this.form.code = ''
-                    const regex = /(^\d+@\D+\.\D+$)||(lishuo123@smail.sut.edu.cn)||(\d+@qq.com)/
+                    const regex = /(((\d+)||(\D+))@((\D+).(\D+)))||((\w+)@((\d+).(\D+)))/
                     if (regex.test(this.form.mail)) {
                         this.msgFlag = false
                         // sendMsgApi({mail:this.form})
