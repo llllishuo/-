@@ -6,6 +6,7 @@ spring:
     username: 1756524586@qq.com
     password: blpityrwzgzleeje
 
+
   application:
 #    应用的名称
     name: reggie_take_out
