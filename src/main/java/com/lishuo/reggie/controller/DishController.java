@@ -13,6 +13,7 @@ import com.lishuo.reggie.service.SetmealDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -37,6 +38,11 @@ public class DishController {
 
     @Autowired
     private SetmealDishService setmealDishService;
+
+
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     /**
@@ -190,6 +196,9 @@ public class DishController {
 
         dishService.updateWithFlavor(dishDto);
 
+        String key="dish_"+dishDto.getCategoryId()+"_"+dishDto.getStatus();
+        redisTemplate.delete(key);
+
 
         return R.success("添加成功！") ;
 
@@ -198,11 +207,26 @@ public class DishController {
     }
     /**
      * 根据分类id查询菜品
-     * @param categoryId
+     * @param dish
      * @return
      */
     @GetMapping("/list")
-    public R<List<DishDto>> getDish(Long categoryId){
+    public R<List<DishDto>> getDish(Dish dish){
+
+        Long categoryId = dish.getCategoryId();
+
+
+        String key="dish_"+dish.getCategoryId()+"_"+dish.getStatus();
+        //先从redis获取数据
+        List<DishDto> dishDtoList=null;
+        dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
+
+        if(dishDtoList!=null){
+            return R.success(dishDtoList);
+        }
+
+        //不存在再查询数据库
+
         //条件构造器
         LambdaQueryWrapper<Dish> queryWrapper=new LambdaQueryWrapper<>();
 
@@ -219,7 +243,7 @@ public class DishController {
 
 
 
-        List<DishDto> dishDtoList=dishList.stream().map((r)->{
+        dishDtoList=dishList.stream().map((r)->{
             DishDto dishDto=new DishDto();
             BeanUtils.copyProperties(r,dishDto);
             LambdaQueryWrapper<DishFlavor> dishFlavorLambdaQueryWrapper=new LambdaQueryWrapper<>();
@@ -229,7 +253,7 @@ public class DishController {
             return dishDto;
         }).collect(Collectors.toList());
 
-
+        redisTemplate.opsForValue().set(key,dishDtoList);
 
         return R.success(dishDtoList);
     }
