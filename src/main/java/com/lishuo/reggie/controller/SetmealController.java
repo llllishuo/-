@@ -13,6 +13,8 @@ import com.lishuo.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> save(@RequestBody SetmealDto setmealDto){
 //        log.info("setmealDto:"+setmealDto);
 
@@ -117,6 +120,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping("/status/{i}")
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> status(@PathVariable int i,Long[] ids){
 //        log.info("status:{},ids:{}",i,ids);
 
@@ -135,6 +139,7 @@ public class SetmealController {
      * @return
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(Long[] ids){
 
 //        log.info(""+ids);
@@ -180,6 +185,7 @@ public class SetmealController {
      * @return
      */
     @PutMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> update(@RequestBody SetmealDto setmealDto){
 //        log.info("dishDto:"+dishDto);
 
