@@ -31,7 +31,7 @@ public class MailUtils {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("瑞吉外卖项目测试-验证码");
-        message.setText("验证码为："+code+"如有问题联系1756524586");
+        message.setText("验证码为："+code+",有效期：五分钟,"+"如有问题联系1756524586");
         javaMailSender.send(message);
     }
 }

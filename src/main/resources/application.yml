@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   mail:
     host: smtp.qq.com    #??
@@ -16,10 +16,16 @@ spring:
       url: jdbc:mysql://localhost:3306/reggie_menghan?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: lishuo123
+
+
   redis:
-    port: 6387
-    host: 127.0.0.1
-    database: 0
+    host: localhost
+    port: 6379
+  cache:
+    redis:
+      time-to-live: 60s  #设置过期时间
+
+
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射

@@ -11,11 +11,13 @@ import com.lishuo.reggie.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -29,6 +31,9 @@ public class MailController {
 
     @Autowired
     private MailUtils mailUtils;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     /**
@@ -55,7 +60,11 @@ public class MailController {
             mailUtils.sendMail(userMail,code);
 
             //存储验证码
-            session.setAttribute(userMail,code);
+//            session.setAttribute(userMail,code);
+
+            //将验证码缓存到redis,设置有效期五分钟
+            redisTemplate.opsForValue().set(userMail,code,5, TimeUnit.MINUTES);
+
             return R.success("验证码发送成功！");
         }
 
@@ -80,8 +89,12 @@ public class MailController {
         //获取验证码
         String code = map.get("code").toString();
 
+
+        log.info((String) code);
         //从session中比对验证码
-        Object codeInSession = session.getAttribute(userMail);
+//        Object codeInSession = session.getAttribute(userMail);
+        //从redis中取
+        Object codeInSession = redisTemplate.opsForValue().get(userMail);
         if(codeInSession!=null&&codeInSession.equals(code)){
             //登录成功
 
@@ -96,11 +109,16 @@ public class MailController {
                 mailService.save(one);
             }
 
+
             session.setAttribute("user",one.getId());
+            //如果用户登录成功则删除验证码
+            redisTemplate.delete(userMail);
             return R.success(one);
 
         }
-
+        if(code==null){
+            return R.error("验证码已失效");
+        }
 
 
         return R.error("登录失败！");
