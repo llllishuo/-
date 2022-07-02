@@ -10,6 +10,10 @@ import com.lishuo.reggie.entity.*;
 import com.lishuo.reggie.service.CategoryService;
 import com.lishuo.reggie.service.SetmealDishService;
 import com.lishuo.reggie.service.SetmealService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/setmeal")
 @Slf4j
+@Api(tags = "套餐相关接口")
 public class SetmealController {
 
     @Autowired
@@ -139,6 +144,10 @@ public class SetmealController {
      * @return
      */
     @DeleteMapping
+    @ApiOperation(value = "根据id删除接口")//介绍接口
+    @ApiImplicitParams({//介绍参数组
+            @ApiImplicitParam(name = "ids",value = "ids",readOnly = true)
+    })
     @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(Long[] ids){
 

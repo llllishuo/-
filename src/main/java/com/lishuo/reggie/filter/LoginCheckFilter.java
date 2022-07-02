@@ -31,6 +31,7 @@ public class LoginCheckFilter implements Filter {
 
         //1.获取本次请求的uri；
         String requestURI = request.getRequestURI();
+        //不需要拦截路径
         String[] urls=new String[]{
                 "/employee/login"
                 ,"employee/logout"
@@ -39,6 +40,10 @@ public class LoginCheckFilter implements Filter {
                 ,"/user/sendMsg"
                 ,"/user/login"
                 ,"/user/mail"
+                ,"/doc.html"
+                ,"/webjars/**"
+                ,"/swagger-resources"
+                ,"/v2/api-docs"
         };
         //2.判断是否处理，不处理则放行；
 
