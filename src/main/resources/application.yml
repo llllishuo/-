@@ -74,5 +74,5 @@ mybatis-plus:
 
 reggie:
 #  path: E:\JavaStudy\reggie\reggie_take_out\src\main\resources\img\
-  path: /usr/local/iml/
+  path: /usr/local/img/
 
