@@ -73,6 +73,6 @@ mybatis-plus:
       id-type: ASSIGN_ID
 
 reggie:
-#  path: E:\JavaStudy\reggie\reggie_take_out\src\main\resources\img\
-  path: /usr/local/img/
+  path: E:\JavaStudy\reggie\reggie_take_out\src\main\resources\img\
+#  path: /usr/local/img/
 

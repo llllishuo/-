@@ -32,6 +32,7 @@ public class AddressBookController {
     public R<List<AddressBook>> getList(){
         LambdaQueryWrapper<AddressBook> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(AddressBook::getUserId,BaseContext.getCurrentId());
+        log.info(""+BaseContext.getCurrentId());
         queryWrapper.orderByDesc(AddressBook::getIsDefault);
 
         List<AddressBook> list = addressBookService.list(queryWrapper);
@@ -146,6 +147,7 @@ public class AddressBookController {
         return R.success("删除成功!");
 
     }
+
 
 
 }
