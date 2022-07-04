@@ -59,7 +59,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.lishuo.reggie.controller"))//扫描接口
+                .apis(RequestHandlerSelectors.basePackage("com.menghan.reggie.controller"))//扫描接口
                 .paths(PathSelectors.any())
                 .build();
     }

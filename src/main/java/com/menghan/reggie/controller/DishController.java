@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.menghan.reggie.common.R;
 import com.menghan.reggie.dto.DishDto;
-import com.lishuo.reggie.entity.*;
+import com.menghan.reggie.entity.*;
 import com.menghan.reggie.entity.Category;
 import com.menghan.reggie.entity.Dish;
 import com.menghan.reggie.entity.DishFlavor;

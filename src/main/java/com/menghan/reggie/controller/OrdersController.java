@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.menghan.reggie.common.BaseContext;
 import com.menghan.reggie.common.R;
-import com.lishuo.reggie.entity.*;
+import com.menghan.reggie.entity.*;
 import com.menghan.reggie.entity.Mail;
 import com.menghan.reggie.entity.Orders;
 import com.menghan.reggie.service.MailService;
